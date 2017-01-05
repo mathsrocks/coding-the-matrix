@@ -1,0 +1,227 @@
+---
+title: "Coding the Matrix: Linear Algebra through Computer Science Applications"
+author: "Zhiwei YANG (z3175089)"
+date: "Friday, February 27, 2015"
+output: html_document
+---
+
+## Language engines
+### Use other languages in knitr
+We can use any languages in __knitr__, including but not limited to `R`. So `R` and `Python` in the same report, brilliant!
+
+```{r py_hello, engine='python'}
+x = 'hello, python world'
+print(x)
+print(x.split(' '))
+```
+
+```{r package_options, include=FALSE}
+# opts_knit$set(root.dir, 'D:/MyData/Personal/Dropbox/Coursera/Brown/matrix')
+```
+
+```{r sysinfo}
+print(Sys.info())
+print(Sys.info()['sysname'])
+```
+
+
+```{r global_options, include=FALSE}
+# library(knitr)
+
+if (Sys.info()['sysname'] == "Windows") {
+  knitr::opts_chunk$set(engine='python') # Windows  
+} else {
+  knitr::opts_chunk$set(engine='python', engine.path='/usr/bin/python3') # Ubuntu (Linux)
+}
+```
+
+```py
+pandoc example
+```
+
+## Week 0: The Function and the Field
+### The Function problems
+
+#### Problem 1: tuple_sum(A, B)
+```{r py_tuplesum}
+from The_Function_problems import tuple_sum
+A = [(1, 2), (10,20)]
+B = [(3, 4), (30,40)]
+print(tuple_sum(A, B))
+```
+
+#### Problem 2: inv_dict(d)
+```{r py_invdict}
+from The_Function_problems import inv_dict
+print(inv_dict({'goodbye':  'au revoir', 'thank you': 'merci'}))
+```
+
+#### Problem 3: list of lists
+```{r py_listoflists}
+from The_Function_problems import row
+print(row(10, 4))
+
+comprehension_with_row = [row(i, 20) for i in range(15)]
+print(comprehension_with_row)
+
+comprehension_without_row = [[i+j for j in range(20)] for i in range(15)]
+print(comprehension_without_row)
+```
+
+#### Functional Inverses
+##### Ungraded problems
+The first function is invertible because it is one-to-one and onto. The second function is not invertible. However, if we change the codomain $V$ to be the same as the domain $U$, it becomes invertible.
+
+#### Functional Composition
+##### Ungraded problems
+The domain and codomain of $g(x)$ is both $\mathbb{R}^+$ so that $g\circ f$ is defined.
+
+$f\circ g$ is defined and we have $(f\circ g)(1)=23,\,(f\circ g)(2)=22$ and $(f\circ g)(3)=21$.
+
+#### Problem 4: probalities of a function
+Note that the probability distribution is defined on $f(x)$'s __domain__, rather than codomain - $f(x)$ itself is deterministic.
+$$\mathbb{P}(f(x)\in \{2, 4, 6\})=\mathbb{P}(x=1)+\mathbb{P}(x=3)+\mathbb{P}(x=5)=0.5+0.1+0.1=0.7$$
+$$\mathbb{P}(f(x)\in \{3, 7\})=\mathbb{P}(x=2)+\mathbb{P}(x=6)=0.2+0.1=0.3$$
+
+#### Problem 5: probalities of a function
+Note that the probability distribution is defined on $g(x)$'s __domain__, rather than codomain - $g(x)$ itself is deterministic.
+$$\mathbb{P}(g(x)=1)=\mathbb{P}(x\in\{1, 4, 7\})=\mathbb{P}(1)+\mathbb{P}(4)+\mathbb{P}(7)=0.2+0.1+0.1=0.4$$
+$$\mathbb{P}(g(x)\in\{0,2\})=1-\mathbb{P}(g(x)=1)=1-0.4=0.6$$
+
+### The Field problems
+#### Problem 1: my_filter(L, num)
+```{r py_myFilter}
+from The_Field_problems import myFilter
+print(myFilter([1,2,4,5,7],2))
+print(myFilter([10,15,20,25],10))
+```
+
+#### Problem 2: my_lists(L)*
+```{r py_my_lists}
+from The_Field_problems import my_lists
+print(my_lists([1,2,4]))
+print(my_lists([0,3]))
+```
+
+#### Problem 3: my_function_composition(f,g)
+```{r py_my_compo}
+from The_Field_problems import myFunctionComposition
+
+f = {0:'a',1:'b'}
+g = {'a':'apple','b':'banana'}
+print(myFunctionComposition(f,g))
+
+a = {'x':24,'y':25}
+b = {24:'twentyfour',25:'twentyfive'}
+print(myFunctionComposition(a,b))
+```
+
+#### Problem 4: mySum(L)
+```{r py_mySum}
+from The_Field_problems import mySum
+print(mySum([1,2,3,4]))
+print(mySum([3,5,10]))
+```
+
+#### Problem 5: myProduct(L)
+```{r py_myProduct}
+from The_Field_problems import myProduct
+print(myProduct([1,3,5]))
+print(myProduct([-3,2,4]))
+```
+
+#### Problem 6: myMin(L)
+```{r py_myMin}
+from The_Field_problems import myMin
+print(myMin([1,-100,2,3]))
+print(myMin([0,3,5,-2,-5]))
+```
+
+#### Problem 7: myConcat(L)
+```{r py_myConcat}
+from The_Field_problems import myConcat
+print(myConcat(['hello','world']))
+print(myConcat(['what','is','up']))
+print(myConcat([]))
+```
+
+#### Problem 8: myUnion(L)
+```{r py_myUnion}
+from The_Field_problems import myUnion
+print(myUnion([{1,2},{2,3}]))
+print(myUnion([set(),{3,5},{3,5}]))
+```
+
+##### Ungraded problems
+1. `0`
+2. `1`
+3. `float("inf")` - infinity
+4. `""` - empty string
+5. `set()` - empty set
+
+It is impossible to define the identity element for intersection operation in practice.
+
+#### Problem 9: sum of complex numbers
+```{r py_sumofcomplex}
+print((3+1j)+(2+2j))
+print((-1+2j)+(1-1j))
+print((2+0j)+(-3+.001j))
+print(4*(0+2j)+(.001+1j))
+```
+
+### Combining operations on complex numbers
+#### Problem 10: transform(a, b, L)
+```{r py_transform}
+from The_Field_problems import transform
+print(transform(3,2,[1,2,3]))
+```
+
+a. $2*(-i)*(z+(1+1i))=(-2i)z+(2-2i)$. Hence, $a=-2i$ and $b=2-2i$.
+b. Scaling the real part and imaginary part by different factors is impossible!
+
+#### Problem 11: arithmatic over GF(2)
+```{r py_gf2}
+from GF2 import one
+
+print(one + one + one + 0)
+print(one*one + 0*one + 0*0 + one*one)
+print((one + one + one)*(one + one + one +one))
+```
+
+## Week 1: The Vector
+### The Vector problems
+#### Vector Addition Practice
+#### Problem 1, 2, 3
+Manually calculated.
+
+
+### Expressing one $GF(2)$ vector as a sum of others
+Manually calculated.
+
+#### Problem 5
+There are patterns in a, b,..., and f.
+
+#### Problem 6
+Dot product over GF(2). $x+1111$ holds because all three vectors have dot-product 0 with 1111 then add 0 to both sides of the equations.
+
+```{r vecaddition}
+from GF2 import one
+
+```
+
+#### Problem 7
+Formulate equations using dot-product, i.e. come up with three vectors represented as lists.
+
+#### Problem 8
+For each of the following pairs of vectors over $\mathbb{R}$, evaluate the expression $\mathbf{u}\cdot\mathbf{v}$.
+
+### Vector Class Homework
+#### Problem 1: implement operations in class `Vec`
+To invoke `cmd` terminal from a specific folder in Windows, either `Shift + Right Click` then select from menu or `Alt + D` to move to address bar then type `cmd`. From a console, make sure your current working directory is the one containing `vec.py`, and type
+`python -m doctest vec.py`
+
+Inline Python doctest results are as follows
+```{r py_vec}
+import doctest
+doctest.testfile("vec.py")
+```
